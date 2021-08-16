@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
@@ -86,6 +87,24 @@ public class Pet {
 
     }
 
+    @Test
+    public void excluirPet(){
+        String petId = "99887766554400";
 
+        given()
+                .contentType("application/json")
+                .log().all()
+        .when()
+                .delete(uri+petId)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("code",is(200))
+                .body("type",is("unknown"))
+                .body("message",is(petId))
+        ;
+
+
+    }
 
 }
