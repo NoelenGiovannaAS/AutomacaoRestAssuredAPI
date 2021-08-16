@@ -67,4 +67,25 @@ public class Pet {
         System.out.println("O token é" + token);
 
     }
+    @Test
+    public void alterarPet() throws IOException {
+        String jsonBody = lerJson("petAlterar.json");
+
+        given()
+                .contentType("application/json")
+                .log().all()
+                .body(jsonBody)
+        .when()
+                .put(uri)
+        .then()
+            .log().all()
+            .statusCode(200)
+            .body("name",is("NeneJr"))
+            .body("status",is("sold"))
+        ;
+
+    }
+
+
+
 }
