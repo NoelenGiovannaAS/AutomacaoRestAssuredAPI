@@ -49,8 +49,8 @@ public class Pet {
     @Test
     public void _02_consultarPet() {
         String petId = "99887766554400";//qual animal que eu vou procurar?
-
-        given()
+        String token =
+                given()
                 .contentType("application/json")
                 .log().all()
         .when()
@@ -61,9 +61,10 @@ public class Pet {
                 .body("name", is("NeneJr"))
                 .body("category.name",is("Dog"))
                 .body("status",is("available"))
-
-
-
+        .extract()
+            .path("category.name")
         ;
+        System.out.println("O token é" + token);
+
     }
 }
