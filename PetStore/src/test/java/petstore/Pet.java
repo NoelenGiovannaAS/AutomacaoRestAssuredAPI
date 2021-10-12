@@ -1,14 +1,11 @@
 package petstore;
 
 import org.testng.annotations.Test;
-import utils.Leitores;
+import utils.ReadersData;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
@@ -17,7 +14,7 @@ public class Pet {
     //swagger padrão de estruturação de API. Nesse caso o petstore.swagger.io
 
     String uri = "https://petstore.swagger.io/v2/pet/";   //base url
-    Leitores lt = new Leitores();
+    ReadersData lt = new ReadersData();
 
     // Incluir - Create - Post
     @Test(priority = 1)
