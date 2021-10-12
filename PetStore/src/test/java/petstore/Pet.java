@@ -1,6 +1,7 @@
 package petstore;
 
 import org.testng.annotations.Test;
+import utils.Leitores;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,15 +17,12 @@ public class Pet {
     //swagger padrão de estruturação de API. Nesse caso o petstore.swagger.io
 
     String uri = "https://petstore.swagger.io/v2/pet/";   //base url
-
-    public String lerJson(String json) throws IOException {
-        return new String(Files.readAllBytes(Paths.get("src/test/resources/data/" + json))); //vai ler json e transformo em texto
-    }
+    Leitores lt = new Leitores();
 
     // Incluir - Create - Post
-    @Test
+    @Test(priority = 1)
     public void _01_incluirPet() throws IOException {
-        String jsonBody = lerJson("pet.json");
+        String jsonBody = lt.lerJson("pet.json");
 
 
         //Sintaxe Gherkin
@@ -70,7 +68,7 @@ public class Pet {
     }
     @Test
     public void alterarPet() throws IOException {
-        String jsonBody = lerJson("petAlterar.json");
+        String jsonBody = lt.lerJson("petAlterar.json");
 
         given()
                 .contentType("application/json")
@@ -106,5 +104,23 @@ public class Pet {
 
 
     }
+
+    @Test
+    public  void  consultarPetPorStatus(){
+        String status = "available";
+
+        given()
+                .contentType("application/json").log().all()
+        .when()
+                .get(uri + "findByStatus?status=" + status)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("status",is(status))
+                .body("name[]",contains("doggie"))
+        ;
+    }
+
+
 
 }
